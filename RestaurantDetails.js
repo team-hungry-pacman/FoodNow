@@ -1,12 +1,12 @@
 ﻿
-// Use current location to get list of restaurants that are open.
-// Determine distance of each restaurant.
-// Sort restaurants by distance.
 // Pick closest 4 restaurants.
 // Make detailed search on those 4.
 // Display details.
-
+var map;
+var service;
 var currentPosition;
+var nearestRestaurants = new Array();
+
 getCurrentLocation();
 
 // Searches for current location
@@ -40,8 +40,8 @@ function options() {
 
 // Searches for nearby restaurants in order of distance
 function searchForNearbyRestaurants(pos) {
-    var map = new google.maps.Map(document.createElement('div'));
-    var service = new google.maps.places.PlacesService(map);
+    map = new google.maps.Map(document.createElement('div'));
+    service = new google.maps.places.PlacesService(map);
     
     var request = {
         location: new google.maps.LatLng(pos.lat, pos.lng),
@@ -59,14 +59,71 @@ function searchForNearbyRestaurants(pos) {
 // processes the results
 function processRestaurants(restaurants, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        
         for (var i = 0; i < 4; i++) {
-            console.log(restaurants[i].name);
+            var request = {
+                placeId: restaurants[i].place_id,
+            }
+            service.getDetails(request, processIndividualRestaurant);
+            
         }
 
     } else {
         console.log(status);
     }
+}
+
+function processIndividualRestaurant(restaurantDetails, status) {
+    var name = restaurantDetails.name;
+    
+    if (restaurantDetails.photos != undefined) {
+        var photoURL = restaurantDetails.photos[0].getUrl({ 'maxWidth': 210, 'maxHeight': 144 });
+    } else {
+        // set to default image;
+        var photoURL = "Insert default link here";
+    }
+
+    var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
+
+    var restaurant = {
+        name,
+        photoURL,
+        openingHours,
+
+    }
+
+    
+    
+    console.log(restaurant.name);
+    console.log(restaurant.openingHours);
+    console.log(restaurant.photoURL);
+    
+}
+
+// Used to determine the opening hours for the current day
+function getOpeningHours(arrayOfHours) {
+
+    // Get current weekday (0-6)
+    // -1 because google places uses Monday as 0, but Date uses Sunday as 0
+    var currentDay = new Date().getDay() - 1;
+
+    // wrap around to 6
+    if (currentDay == -1) {
+        currentDay = 6;
+    }
+
+    // Split today's hours into an array by whitespace
+    var hoursForToday = arrayOfHours[currentDay].split(' ');
+    var hours = "";
+
+    // Cycle through and recreate string, ignoring first token
+    for (var i = 1; i < hoursForToday.length; i++) {
+        hours += hoursForToday[i] + " ";
+
+    }
+
+    return hours;
+    
+
 }
 
 function calculateDistance(positionOne, positionTwo) {
