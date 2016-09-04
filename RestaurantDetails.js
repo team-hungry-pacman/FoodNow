@@ -84,6 +84,7 @@ function processIndividualRestaurant(restaurantDetails, status) {
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
 
+    // Add details to a new variable
     var restaurant = {
         name,
         photoURL,
@@ -91,8 +92,10 @@ function processIndividualRestaurant(restaurantDetails, status) {
 
     }
 
+    // Add to array
     nearestRestaurants.push(restaurant);
 
+    // Add details to the page once 4 restaurants have been processed
     if (nearestRestaurants.length == 4) {
         addDetailsToPage(nearestRestaurants);
     }
@@ -138,4 +141,6 @@ function addDetailsToPage(nearestRestaurants) {
         console.log(nearestRestaurants[i].photoURL);
         console.log(nearestRestaurants[i].openingHours);
     }
+
+    // TODO: this method right here...
 }
