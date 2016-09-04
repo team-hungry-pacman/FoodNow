@@ -91,11 +91,12 @@ function processIndividualRestaurant(restaurantDetails, status) {
 
     }
 
-    
-    
-    console.log(restaurant.name);
-    console.log(restaurant.openingHours);
-    console.log(restaurant.photoURL);
+    nearestRestaurants.push(restaurant);
+
+    if (nearestRestaurants.length == 4) {
+        addDetailsToPage(nearestRestaurants);
+    }
+
     
 }
 
@@ -126,6 +127,15 @@ function getOpeningHours(arrayOfHours) {
 
 }
 
+
 function calculateDistance(positionOne, positionTwo) {
 
+}
+
+function addDetailsToPage(nearestRestaurants) {
+    for (var i = 0; i < nearestRestaurants.length; i++) {
+        console.log(nearestRestaurants[i].name);
+        console.log(nearestRestaurants[i].photoURL);
+        console.log(nearestRestaurants[i].openingHours);
+    }
 }
