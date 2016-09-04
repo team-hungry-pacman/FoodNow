@@ -72,6 +72,8 @@ function processRestaurants(restaurants, status) {
     }
 }
 
+// call back method for processRestaurants.
+// processes the individual restaurants.
 function processIndividualRestaurant(restaurantDetails, status) {
     var name = restaurantDetails.name;
     
