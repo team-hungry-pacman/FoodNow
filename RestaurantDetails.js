@@ -85,12 +85,14 @@ function processIndividualRestaurant(restaurantDetails, status) {
     }
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
+    var position = restaurantDetails.geometry.location
 
     // Add details to a new variable
     var restaurant = {
         name,
         photoURL,
         openingHours,
+        position,
 
     }
 
@@ -134,15 +136,34 @@ function getOpeningHours(arrayOfHours) {
 
 
 function calculateDistance(positionOne, positionTwo) {
-
+    // to do
 }
 
+// This function adds the details of the restaurants on the web app
 function addDetailsToPage(nearestRestaurants) {
+
     for (var i = 0; i < nearestRestaurants.length; i++) {
-        console.log(nearestRestaurants[i].name);
-        console.log(nearestRestaurants[i].photoURL);
-        console.log(nearestRestaurants[i].openingHours);
+        document.getElementById("img-" + i).src = nearestRestaurants[i].photoURL;
+        document.getElementById("name-" + i).innerHTML = nearestRestaurants[i].name;
+        document.getElementById("hours-" + i).innerHTML = nearestRestaurants[i].openingHours;
+
+        // Allows the restaurant tile to be clicked.
+        var button = document.getElementById("restaurant-" + i);
+        button.restaurant = nearestRestaurants[i];
+        button.addEventListener("click", function () {
+            displayMap(this.restaurant)});
+
     }
 
-    // TODO: this method right here...
 }
+
+// This function displays the map with the location
+// of the clicked restaurant
+function displayMap(restaurant) {
+    console.log(restaurant.name);
+
+}
+
+// TO DO:
+// Display map with markers
+// Implement distance function
