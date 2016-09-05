@@ -166,4 +166,4 @@ function displayMap(restaurant) {
 
 // TO DO:
 // Display map with markers
-// Implement distance function
+// Implement distance function .
