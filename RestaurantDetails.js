@@ -171,6 +171,7 @@ function displayMap(restaurant) {
     }
 
     map = new google.maps.Map(document.getElementById('map'), options);
+
     var markers = new Array();
 
     var currentPositionMarker = new google.maps.Marker({
@@ -181,6 +182,7 @@ function displayMap(restaurant) {
     var restaurantLocationMarker = new google.maps.Marker({
         position: restaurant.position,
         map: map,
+        icon: "http://maps.gstatic.com/mapfiles/circle.png",
     });
 
     markers.push(currentPositionMarker);
@@ -196,5 +198,4 @@ function displayMap(restaurant) {
 }
 
 // TO DO:
-// Display map with markers
 // Implement distance function .
