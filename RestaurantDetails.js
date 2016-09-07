@@ -85,7 +85,7 @@ function processIndividualRestaurant(restaurantDetails, status) {
     }
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
-    var position = restaurantDetails.geometry.location
+    var position = restaurantDetails.geometry.location;
 
     // Add details to a new variable
     var restaurant = {
@@ -161,6 +161,37 @@ function addDetailsToPage(nearestRestaurants) {
 // of the clicked restaurant
 function displayMap(restaurant) {
     console.log(restaurant.name);
+
+    document.getElementById("map").style.height = '700px';
+    document.getElementById("content").style.display = 'none';
+
+    var options = {
+        center: currentPosition,
+        zoom: 17,
+    }
+
+    map = new google.maps.Map(document.getElementById('map'), options);
+    var markers = new Array();
+
+    var currentPositionMarker = new google.maps.Marker({
+        position: currentPosition,
+        map: map,
+    });
+
+    var restaurantLocationMarker = new google.maps.Marker({
+        position: restaurant.position,
+        map: map,
+    });
+
+    markers.push(currentPositionMarker);
+    markers.push(restaurantLocationMarker);
+
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < markers.length; i++) {
+        bounds.extend(markers[i].getPosition());
+    }
+
+    map.fitBounds(bounds);
 
 }
 
