@@ -168,7 +168,7 @@ function addMarker(place) {
         map: map,
         position: place.position,
         icon: {
-            url: 'http://maps.gstatic.com/mapfiles/circle.png',
+            url: 'http://maps.gstatic.com/mapfiles/dining.png',
             anchor: new google.maps.Point(10, 10),
             scaledSize: new google.maps.Size(10, 17)
         }
