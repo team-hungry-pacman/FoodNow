@@ -8,6 +8,11 @@ var currentPosition;
 var nearestRestaurants = new Array();
 
 window.onload = function () {
+    var button = document.getElementById("show-me-more-button");
+    button.addEventListener("click", function () {
+        addMoreRestaurants();
+    });
+
     getCurrentLocation();
 }
 
@@ -164,10 +169,6 @@ function distanceCallback(response, status) {
         var element = results[i];
         document.getElementById("distance-" + i).innerHTML = "Distance: " + element.distance.text;
     }
-    
-
-    
-      
 
 }
 
@@ -233,5 +234,12 @@ function displayMap(restaurant) {
 
 }
 
-// TO DO:
-// Implement distance function .
+function addMoreRestaurants() {
+    var newRow = document.createElement("div");
+    var node = document.createTextNode("HELLO");
+    para.appendChild(node);
+
+    var element = document.getElementById("content");
+    var child = document.getElementById("show-more-more-row");
+    element.insertBefore(para, child);
+}
