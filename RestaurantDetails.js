@@ -7,7 +7,9 @@ var service;
 var currentPosition;
 var nearestRestaurants = new Array();
 
-getCurrentLocation();
+window.onload = function () {
+    getCurrentLocation();
+}
 
 // Searches for current location
 function getCurrentLocation() {
@@ -96,6 +98,7 @@ function processIndividualRestaurant(restaurantDetails, status) {
 
     }
 
+
     // Add to array
     nearestRestaurants.push(restaurant);
 
@@ -103,6 +106,8 @@ function processIndividualRestaurant(restaurantDetails, status) {
     if (nearestRestaurants.length == 4) {
         addDetailsToPage(nearestRestaurants);
     }
+
+    
 
     
 }
@@ -135,8 +140,35 @@ function getOpeningHours(arrayOfHours) {
 }
 
 
-function calculateDistance(positionOne, positionTwo) {
-    // to do
+function addDistance(nearestRestaurants) {
+    var service = new google.maps.DistanceMatrixService();
+    var restaurantDestinations = new Array();
+
+    for (var i = 0; i < nearestRestaurants.length; i++) {
+        restaurantDestinations.push(nearestRestaurants[i].position);
+    }
+
+    var request = {
+        origins: [currentPosition],
+        destinations: restaurantDestinations,
+        travelMode: 'WALKING',
+    }
+    
+    service.getDistanceMatrix(request, distanceCallback);
+
+}
+
+function distanceCallback(response, status) {
+    var results = response.rows[0].elements;
+    for (var i = 0; i < results.length; i++) {
+        var element = results[i];
+        document.getElementById("distance-" + i).innerHTML = "Distance: " + element.distance.text;
+    }
+    
+
+    
+      
+
 }
 
 // This function adds the details of the restaurants on the web app
@@ -154,6 +186,10 @@ function addDetailsToPage(nearestRestaurants) {
             displayMap(this.restaurant)});
 
     }
+
+    addDistance(nearestRestaurants);
+
+
 
 }
 
