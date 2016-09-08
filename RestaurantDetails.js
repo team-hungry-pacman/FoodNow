@@ -236,10 +236,55 @@ function displayMap(restaurant) {
 
 function addMoreRestaurants() {
     var newRow = document.createElement("div");
-    var node = document.createTextNode("HELLO");
-    para.appendChild(node);
 
-    var element = document.getElementById("content");
-    var child = document.getElementById("show-more-more-row");
-    element.insertBefore(para, child);
+    var columnOne = document.createElement("div");
+    var columnTwo = document.createElement("div");
+
+    columnOne.className = "col-sm-offset-2 col-sm-4";
+    columnTwo.className = "col-sm-4";
+
+    createColumn(columnOne);
+    createColumn(columnTwo);
+
+    columnOne.firstChild.childNodes[1].innerHTML = "HELLO";
+    columnTwo.firstChild.childNodes[1].innerHTML = "HELLO";
+
+    newRow.appendChild(columnOne);
+    newRow.appendChild(columnTwo);
+
+    
+
+    var element = document.getElementById("container");
+    var child = document.getElementById("show-me-more-row");
+    element.insertBefore(newRow, child);
+}
+
+function createColumn(column) {
+    var imgHover = document.createElement("div");
+    imgHover.className = "img-hover";
+
+    var border = document.createElement("figure");
+    border.className = "border";
+
+    var img = document.createElement("img");
+    img.className = "img-responsive center-block";
+    img.style = "width: 50%; height: 50%";
+    img.src = "images/pacman.gif";
+
+    var name = document.createElement("p");
+    var openingHours = document.createElement("p");
+    var distance = document.createElement("p");
+
+    imgHover.appendChild(border);
+    imgHover.appendChild(name);
+    imgHover.appendChild(openingHours);
+    imgHover.appendChild(distance);
+
+    border.appendChild(img);
+
+    column.appendChild(imgHover);
+   
+    
+    
+
 }
