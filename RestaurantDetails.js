@@ -6,6 +6,7 @@ var map;
 var service;
 var currentPosition;
 var nearestRestaurants = new Array();
+var restaurantsLowDetail;
 
 window.onload = function () {
     var button = document.getElementById("show-me-more-button");
@@ -66,9 +67,11 @@ function searchForNearbyRestaurants(pos) {
 // processes the results
 function processRestaurants(restaurants, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
+        restaurantsLowDetail = restaurants;
         for (var i = 0; i < 4; i++) {
+            var restaurant = restaurantsLowDetail.shift();
             var request = {
-                placeId: restaurants[i].place_id,
+                placeId: restaurant.place_id,
             }
             service.getDetails(request, processIndividualRestaurant);
             
@@ -234,7 +237,11 @@ function displayMap(restaurant) {
 
 }
 
+// This is the function that is called when the
+// show me more button is pressed.
+// It adds a new row of restaurants.
 function addMoreRestaurants() {
+    // TODO: USE restaurantsLowDetail to display information on newly created rows
     var newRow = document.createElement("div");
 
     var columnOne = document.createElement("div");
@@ -252,13 +259,13 @@ function addMoreRestaurants() {
     newRow.appendChild(columnOne);
     newRow.appendChild(columnTwo);
 
-    
-
     var element = document.getElementById("container");
     var child = document.getElementById("show-me-more-row");
     element.insertBefore(newRow, child);
 }
 
+// This function creates and appends the HTML elements required
+// to display the restaurant details
 function createColumn(column) {
     var imgHover = document.createElement("div");
     imgHover.className = "img-hover";
@@ -283,8 +290,5 @@ function createColumn(column) {
     border.appendChild(img);
 
     column.appendChild(imgHover);
-   
-    
-    
 
 }
