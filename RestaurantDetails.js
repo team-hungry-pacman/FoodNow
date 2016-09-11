@@ -336,8 +336,32 @@ function processIndividualRestaurantShowMeMore(restaurantDetails, status) {
     nearestRestaurants.push(restaurant);
 
     // Add details to the page once 4 restaurants have been processed
-    if (nearestRestaurants.length == 4) {
-        addDetailsToPage(nearestRestaurants);
+    if (nearestRestaurants.length == 2) {
+        addDetailsToPageShowMeMore(nearestRestaurants);
     }
+
+}
+
+function addDetailsToPageShowMeMore(nearestRestaurants) {
+    for (var i = 0; i < nearestRestaurants.length; i++) {
+        currentRow.childNodes[i].firstChild.childNodes[0].firstChild.src = nearestRestaurants[i].photoURL;
+        currentRow.childNodes[i].firstChild.childNodes[1].innerHTML = nearestRestaurants[i].name;
+        currentRow.childNodes[i].firstChild.childNodes[2].innerHTML = nearestRestaurants[i].openingHours;
+        
+
+        // Allows the restaurant tile to be clicked.
+        var button = currentRow.childNodes[i].firstChild;
+        button.restaurant = nearestRestaurants[i];
+        button.addEventListener("click", function () {
+            displayMap(this.restaurant)
+        });
+
+    }
+
+    addDistanceShowMeMore(nearestRestaurants);
+
+}
+
+function addDistanceShowMeMore(nearestRestaurants) {
 
 }
