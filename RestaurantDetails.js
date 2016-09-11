@@ -363,5 +363,31 @@ function addDetailsToPageShowMeMore(nearestRestaurants) {
 }
 
 function addDistanceShowMeMore(nearestRestaurants) {
+    var service = new google.maps.DistanceMatrixService();
+    var restaurantDestinations = new Array();
+
+    var length = nearestRestaurants.length;
+
+    for (var i = 0; i < length; i++) {
+        restaurantDestinations.push(nearestRestaurants[0].position);
+        nearestRestaurants.shift();
+    }
+
+    var request = {
+        origins: [currentPosition],
+        destinations: restaurantDestinations,
+        travelMode: 'WALKING',
+    }
+
+    service.getDistanceMatrix(request, distanceCallbackShowMeMore);
+
+}
+
+function distanceCallbackShowMeMore(response, status) {
+    var results = response.rows[0].elements;
+    for (var i = 0; i < results.length; i++) {
+        var element = results[i];
+        currentRow.childNodes[i].firstChild.childNodes[3].innerHTML = "Distance: " + element.distance.text;
+    }
 
 }
