@@ -12,7 +12,10 @@ var currentRow;
 window.onload = function () {
     var button = document.getElementById("show-me-more-button");
     button.addEventListener("click", function () {
-        addMoreRestaurants();
+        if (restaurantsLowDetail.length != 0) {
+            addMoreRestaurants();
+        }
+        
     });
 
     getCurrentLocation();
@@ -250,20 +253,23 @@ function addMoreRestaurants() {
     // TODO: USE restaurantsLowDetail to display information on newly created rows
     var newRow = document.createElement("div");
 
-    var columnOne = document.createElement("div");
-    var columnTwo = document.createElement("div");
+    for(var i = 0; i < 2; i++) {
+        var column = document.createElement("div");
 
-    columnOne.className = "col-sm-offset-2 col-sm-4";
-    columnTwo.className = "col-sm-4";
+        if (i == 0) {
+            column.className = "col-sm-offset-2 col-sm-4";
+        } else {
+            column.className = "col-sm-4";
+        }
 
-    createColumn(columnOne);
-    createColumn(columnTwo);
+        createColumn(column);
+        newRow.appendChild(column);
 
-    columnOne.firstChild.childNodes[1].innerHTML = "HELLO";
-    columnTwo.firstChild.childNodes[1].innerHTML = "HELLO";
-
-    newRow.appendChild(columnOne);
-    newRow.appendChild(columnTwo);
+        column.photo = column.firstChild.childNodes[0].firstChild;
+        column.name = column.firstChild.childNodes[1];
+        column.openingHours = column.firstChild.childNodes[2];
+        column.distance = column.firstChild.childNodes[3];
+    }
 
     var element = document.getElementById("container");
     var child = document.getElementById("show-me-more-row");
@@ -344,9 +350,9 @@ function processIndividualRestaurantShowMeMore(restaurantDetails, status) {
 
 function addDetailsToPageShowMeMore(nearestRestaurants) {
     for (var i = 0; i < nearestRestaurants.length; i++) {
-        currentRow.childNodes[i].firstChild.childNodes[0].firstChild.src = nearestRestaurants[i].photoURL;
-        currentRow.childNodes[i].firstChild.childNodes[1].innerHTML = nearestRestaurants[i].name;
-        currentRow.childNodes[i].firstChild.childNodes[2].innerHTML = nearestRestaurants[i].openingHours;
+        currentRow.childNodes[i].photo.src = nearestRestaurants[i].photoURL;
+        currentRow.childNodes[i].name.innerHTML = nearestRestaurants[i].name;
+        currentRow.childNodes[i].openingHours.innerHTML = nearestRestaurants[i].openingHours;
         
 
         // Allows the restaurant tile to be clicked.
@@ -387,7 +393,7 @@ function distanceCallbackShowMeMore(response, status) {
     var results = response.rows[0].elements;
     for (var i = 0; i < results.length; i++) {
         var element = results[i];
-        currentRow.childNodes[i].firstChild.childNodes[3].innerHTML = "Distance: " + element.distance.text;
+        currentRow.childNodes[i].distance.innerHTML = "Distance: " + element.distance.text;
     }
 
 }
