@@ -13,9 +13,9 @@ Currently under development:
 - New designs
 - Creating a filter for user to sort by price, ratings, distance, type of restaurant, closing soon
 - Google request timer
-- 'Show Me More' button 
 - Radius cap
 
 Fixes:
 - Date set to current date and time
 - Nearest distance locations fixed
+- 'Show Me More' button 
