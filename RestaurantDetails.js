@@ -322,7 +322,7 @@ function processIndividualRestaurantShowMeMore(restaurantDetails, status) {
         var photoURL = restaurantDetails.photos[0].getUrl({ 'maxWidth': 210, 'maxHeight': 144 });
     } else {
         // set to default image;
-        var photoURL = "images\img-not-found.png";
+        var photoURL = "images/img-not-found.png";
     }
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
