@@ -92,10 +92,10 @@ function processIndividualRestaurant(restaurantDetails, status) {
     var name = restaurantDetails.name;
     
     if (restaurantDetails.photos != undefined) {
-        var photoURL = restaurantDetails.photos[0].getUrl({ 'maxWidth': 210, 'maxHeight': 144 });
+        var photoURL = restaurantDetails.photos[0].getUrl({ 'maxWidth': 400, 'maxHeight': 400 });
     } else {
         // set to default image;
-        var photoURL = "Insert default link here";
+        var photoURL = "images/img-not-found.png";
     }
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
@@ -322,7 +322,7 @@ function processIndividualRestaurantShowMeMore(restaurantDetails, status) {
         var photoURL = restaurantDetails.photos[0].getUrl({ 'maxWidth': 210, 'maxHeight': 144 });
     } else {
         // set to default image;
-        var photoURL = "Insert default link here";
+        var photoURL = "images/img-not-found.png";
     }
 
     var openingHours = getOpeningHours(restaurantDetails.opening_hours.weekday_text);
